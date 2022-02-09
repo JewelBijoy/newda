@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - DA Graph</title>
+
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/quill/quill.snow.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/quill/quill.bubble.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/simple-datatables/style.css')}}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{ url_for('static',filename='css/style.css')}}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <script src="http://underscorejs.org/underscore-min.js"></script>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block">DA Graph</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="/">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/neograph" target="_blank">
+          <i class="bi bi-snow3"></i>
+          <span>Neo4j Graph</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Dashboard for DA Observations</h5>
+              <p>View patterns in the observations</p>
+
+              <!-- Browser Default Validation -->
+              <form class="row g-3" id="form1" method="post" action="/q1">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                  <label for="validationDefault04" for="Vertical" class="form-label">Vertical</label>
+                  <select class="form-select" name="vertical" id="ver">
+                    <option value="ALL">ALL</option>
+                    {% for i in vk %}
+                    <option value='{{i.v}}'>{{i.v}}</option>
+                    {% endfor %}
+
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationDefault04" for="Account" class="form-label">Account</label>
+                  <select class="form-select" name="account" id="acc">
+                    
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationDefault04" for="Month" class="form-label">Month</label>
+                  <select class="form-select" id="mon" name="month">
+                    <option value='January'>January</option>
+                    <option value='October'>October</option>
+                    <!-- <option value='November'>November</option>
+                    <option value='December'>December</option> -->
+                    <option value="ALL">ALL</option>
+                    
+                  </select>
+                </div>
+
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-5">
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+              </form>
+              <!-- End Browser Default Validation -->
+
+
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+        <div class="col-xxl-1 col-md-3"></div>
+
+        <div class="col-xxl-5 col-md-3">
+          <div class="card info-card sales-card">
+
+
+
+            <div class="card-body">
+              <h5 class="card-title">Account | Vertical | Month</h5>
+
+              <div class="d-flex align-items-center">
+
+                <div class="ps-3">
+                  <p>{{a}} | {{v}} | {{m}}</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- End Sales Card -->
+
+        <div class="col-xxl-5 col-md-3">
+          <div class="card info-card sales-card">
+
+
+
+            <div class="card-body">
+              <h5 class="card-title">Approved Opportunities | Rejected Opportunities</span></h5>
+
+              <div class="d-flex align-items-center">
+                <div class="ps-3">
+                  <p>{% for i in appr %}{{i.opn}}{% endfor %} | {% for i in appr2 %}{{i.opn2}}{% endfor %}</p>
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- End Sales Card -->
+
+        <div class="col-xxl-1 col-md-3"></div>
+        <div class="col-xxl-1 col-md-3"></div>
+
+        <div class="col-xxl-5 col-md-3">
+          <div class="card info-card sales-card">
+
+
+
+            <div class="card-body">
+              <h5 class="card-title">Risky observations | Open risky observations</span></h5>
+
+              <div class="d-flex align-items-center">
+
+                <div class="ps-3">
+                  <p>{% for i in risky %}{{i.na}}{% endfor %} | {% for i in openrisky %}{{i.na}}{% endfor %}</p>
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- End Sales Card -->
+
+        <div class="col-xxl-5 col-md-3">
+          <div class="card info-card sales-card">
+
+
+
+            <div class="card-body">
+              <h5 class="card-title">Open observations | Closed observations</span></h5>
+
+              <div class="d-flex align-items-center">
+
+                <div class="ps-3">
+                  <p>{% for i in openob %}{{i.na}}{% endfor %} | {% for i in closedob %}{{i.na}}{% endfor %}</p>
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- End Sales Card -->
+
+
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">DA Tables</h5>
+
+            <!-- Table with stripped rows -->
+            <table class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col">Vertical</th>
+                  <th scope="col">Account</th>
+                  <th scope="col">Opportunity ID</th>
+                  <th scope="col">DA Approval</th>
+                  <th scope="col">Opportunity Name</th>
+                  <th scope="col">Deliverable Type</th>
+                  <th scope="col">Billing Type</th>
+                  <th scope="col">Observation</th>
+                  <th scope="col">Observation Type</th>
+                  <th scope="col">Risky</th>
+                  <th scope="col">Status</th>
+                </tr>
+
+              </thead>
+              <tbody>
+                {% for i in r3 %}
+                <tr>
+                  <td>{{i.v}}</td>
+                  <td>{{i.a}}</td>
+                  <td>{{i.oi}}</td>
+                  <td>{{i.da}}</td>
+                  <td>{{i.on}}</td>
+                  <td>{{i.d}}</td>
+                  <td>{{i.b}}</td>
+                  <td>{{i.o}}</td>
+                  <td>{{i.ot}}</td>
+                  <td>{{i.r}}</td>
+                  <td>{{i.s}}</td>
+                </tr>
+                {% endfor %}
+                </tr>
+
+              </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+
+          </div>
+        </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span></span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static',filename='vendor/apexcharts/apexcharts.min.js')}}"></script>
+  <script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{ url_for('static',filename='vendor/chart.js/chart.min.js')}}"></script>
+  <script src="{{ url_for('static',filename='vendor/echarts/echarts.min.js')}}"></script>
+  <script src="{{ url_for('static',filename='vendor/quill/quill.min.js')}}"></script>
+  <script src="{{ url_for('static',filename='vendor/simple-datatables/simple-datatables.js')}}"></script>
+  <script src="{{ url_for('static',filename='vendor/tinymce/tinymce.min.js')}}"></script>
+  <script src="{{ url_for('static',filename='vendor/php-email-form/validate.js')}}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static',filename='js/main.js')}}"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <style>
+    .node {
+      stroke: #222;
+      stroke-width: 1.5px;
+    }
+
+    .node.TeamName {
+      fill: rgb(230, 240, 208);
+    }
+
+    .node.Business_Service {
+      fill: rgb(15, 14, 14);
+    }
+
+    .link {
+      stroke: rgb(248, 243, 243);
+      stroke-opacity: .6;
+      stroke-width: 1px;
+    }
+  </style>
+  <script type="text/javascript">
+    var main = document.getElementById('ver');
+    var sub = document.getElementById('acc');
+    //main.addEventListener('change',function(){})
+    //console.log(`{{data}}`);
+    m = $("#ver").val(); console.log(); 
+    {% for i in data %}
+    if (m === `{{i.ver}}`) {
+          $('#acc').append("<option value='" + `{{i.acc}}`.trim() + "'>" + `{{i.acc}}` + "</option>"); 
+          console.log(`{{i.acc}}`);
+   } 
+    {% endfor %}
+     $('#ver').change(function () {
+      $('#acc').
+      empty(); 
+      var a = $(this).val(); 
+      {% for i in data %} console.log(a + " " + `{{i.ver}}`);
+       if (a === `{{i.ver}}`.replace('&amp;', '&'))
+        { 
+        $('#acc').append("<option value='" + `{{i.acc}}`.trim() + "'>" + `{{i.acc}}` + "</option>"); 
+        console.log(`{{i.acc}}`); 
+      }
+      {% endfor %}
+
+      if (a == 'ALL'){
+          $('#acc').empty(); 
+          $('#acc').append("<option value='" + `ALL` + "'>" + `ALL` + "</option>"); 
+      }
+          $('#mon').empty(); 
+      
+      
+
+
+          {% for i in data %} 
+          if (a === `{{i.ver}}`.replace('&amp;', '&'))
+          { $('#mon').append("<option value='" + `{{i.m}}`.trim() + "'>" + `{{i.m}}` + "</option>"); 
+          console.log("Hi"); 
+          }
+         {% endfor %}
+
+          var mk = $("#acc").val();
+          if(mk =='ALL'){
+          $('#mon').append("<option value='" + `ALL` + "'>" + `ALL` + "</option>"+
+          "<option value='" + `January` + "'>" + `January` + "</option>"+"<option value='" + `October` + "'>" + `October` + "</option>");
+          }
+          
+
+
+         
+
+
+    
+
+
+
+
+
+    })
+    console.log(m);
+    if(m=='ALL'){
+      $('#acc').append("<option value='" + `ALL` + "'>" + `ALL` + "</option>"); 
+    }
+    
+  </script>
+
+</body>
+
+</html>
